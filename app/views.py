@@ -24,3 +24,25 @@ def insert_webpage(request):
         WO.save()
         return HttpResponse('webpage data is inserted')
     return render(request,'insert_webpage.html',d)
+
+def retrive_webpage(request):
+    LTO=Topic.objects.all()
+    d={'LTO':LTO}
+    if request.method=='POST':
+        MSTS=request.POST.getlist('tn')
+        print(MSTS)
+        WOS=Webpage.objects.none()
+        for i in MSTS:
+            WOS=WOS|Webpage.objects.filter(topic_name=i)
+        d1={'WOS':WOS}
+        return render(request,'display_webpage.html',d1)
+
+    return render(request,'retrive_webpage.html',d)
+
+def checkbox(request):
+    LTO=Topic.objects.all()
+    d={'LTO':LTO}
+    return render(request,'checkbox.html',d)
+
+
+
